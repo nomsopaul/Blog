@@ -1,35 +1,31 @@
 import "./post.css";
+import { Link } from "react-router-dom";
 
-export default function Post() {
+export default function Post({post}) {
+  const PF = "http://localhost:5000/images/";
     return (
       <div className="post">
+        {post.photo && (
         <img
           className="postImg"
-          src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          src={ PF + post.photo}
           alt=""
         />
+        )}
         <div className="postInfo">
-          <div className="postCats">
-            <span className="postCat">Music</span>
-            <span className="postCat">Life</span>
+          <div className="postCats">{
+            post.categories.map((c) => (
+              <span className="postCat">{c.name}</span>
+            ))}  
           </div>
-          <span className="postTitle">Lorem ipsum dolor sit amet</span>
+          <Link to={`/post/${post._id}`} className="link"> 
+          <span className="postTitle">{post.title}</span>
+          </Link>
           <hr />
-          <span className="postDate">1 hour ago!</span>
+          <span className="postDate">{new Date(post.createdAt).toDateString()}</span>
         </div>
         <p className="postDesc">
-          Lorem ipsum dolor sit amet, consectetur adipsicing elit, sed do
-          eiusmod tempor incididunt ut lab, Reiciendis optio cumque assumenda.
-          Ut enim ad ex eu fugiat nulla pariatur omnis volunptas excepturi est
-          vel nobis, officilis saepe. Molestias voluntatibus harum ullam?F Lorem
-          ipsum dolor sit amet, consectetur adipsicing elit, sed do eiusmod
-          tempor incididunt ut lab, Reiciendis optio cumque assumenda. Ut enim
-          ad ex eu fugiat nulla pariatur omnis volunptas excepturi est vel
-          nobis, officilis saepe. Molestias voluntatibus harum ullam?F Lorem
-          ipsum dolor sit amet, consectetur adipsicing elit, sed do eiusmod
-          tempor incididunt ut lab, Reiciendis optio cumque assumenda. Ut enim
-          ad ex eu fugiat nulla pariatur omnis volunptas excepturi est vel
-          nobis, officilis saepe. Molestias voluntatibus harum ullam?F
+          {post.desc}
         </p>
       </div>
     );
